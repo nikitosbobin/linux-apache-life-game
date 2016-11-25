@@ -7,7 +7,8 @@ $(document).ready(function() {
 	resetCanvas();
 	
 	$("#canvas").click(function(e) {
-		var point = {x:Math.floor((e.pageX-canvas.offsetLeft)/11),y:Math.floor((e.pageY-canvas.offsetTop)/11)};
+		var offset = $(this).offset();
+		var point = {x:Math.floor((e.pageX-offset.left)/11),y:Math.floor((e.pageY-offset.top)/11)};
 		if (shouldAdd(point)) {
 			field.push(point);
 			drawPoint(point);
@@ -18,7 +19,7 @@ $(document).ready(function() {
 	});
 	
 	$("#next").click(function() {
-		$.post("/php/core.php", {points:field}).done(function(data) {
+		$.post("php/core.php", {points:field}).done(function(data) {
 			field = JSON.parse(data);
 			if (!field) {
 				field = [];
